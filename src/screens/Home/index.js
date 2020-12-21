@@ -9,9 +9,9 @@ const Post1 = {
   description: 'Trendy Song',
   songName: 'Yo Yo Horny Singer..!!',
   songImage: 'https://i.pinimg.com/originals/3a/e6/34/3ae6340237477d74a76e6001006644ad.jpg',
-  likes: '123',
-  comments: '23',
-  share: '89',
+  likes: 123,
+  comments: 23,
+  share: 89,
   user: {
     id: 'u1',
     username: 'keerthi',

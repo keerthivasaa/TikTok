@@ -1,5 +1,12 @@
 import React, { useState } from 'react';
-import { SafeAreaView, Text, View, Image, TouchableWithoutFeedback } from 'react-native';
+import {
+  SafeAreaView,
+  Text,
+  View,
+  Image,
+  TouchableWithoutFeedback,
+  TouchableOpacity
+} from 'react-native';
 
 import styles from './styles';
 import Video from 'react-native-video';
@@ -11,12 +18,21 @@ import AntDesign from 'react-native-vector-icons/AntDesign';
 
 const Post = (props) => {
 
-  const {post} = props;
-
+  const [post, setPost] = useState(props.post);
+  const [isLiked, setIsLiked] = useState(false);
   const [paused, setPaused] = useState(false);
 
   const onPlayPausePress = () => {
     setPaused(!paused);
+  };
+
+  const onLikePress = () => {
+    const likesToAdd = isLiked ? -1 : 1;
+    setPost({
+      ...post,
+      likes: post.likes + likesToAdd,
+    });
+    setIsLiked(!isLiked);
   };
 
   return (
@@ -35,10 +51,10 @@ const Post = (props) => {
         <View style={styles.rightContainer}>
           <Image style={styles.profilePicture} source={{ uri: post.user.imageUri }} />
 
-          <View style={styles.iconContainer}>
-            <AntDesign name={'heart'} size={30} color="white" />
+          <TouchableOpacity style={styles.iconContainer} onPress={onLikePress}>
+            <AntDesign name={'heart'} size={30} color= {isLiked ? 'red' : 'white'} />
             <Text style={styles.statusLabel}>{post.likes}</Text>
-          </View>
+          </TouchableOpacity>
 
           <View style={styles.iconContainer}>
             <FontAwesome name={'commenting'} size={30} color="white" />
@@ -62,7 +78,7 @@ const Post = (props) => {
               <Text style={styles.songName}>{post.songName}</Text>
             </View>
           </View>
-          <Image style={styles.songImage} source={{ uri: post.songImage }}/>
+          <Image style={styles.songImage} source={{ uri: post.songImage }} />
         </View>
       </View>
     </SafeAreaView>
